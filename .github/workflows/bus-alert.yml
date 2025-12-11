@@ -1,7 +1,7 @@
 name: Bus Alert Workflow
 
 on:
-  schedule:
+  # schedule:
     # Run every 5 minutes from 8:00 AM to 9:10 AM Central Time (Mon-Fri)
     # Note: GitHub Actions uses UTC, so we need to convert:
     # 8:00 AM CT = 2:00 PM UTC (during CDT) or 3:00 PM UTC (during CST)
@@ -9,7 +9,7 @@ on:
     #
     # We'll run from 2:00-4:15 PM UTC to cover both DST scenarios
     # Pattern: minute hour * * day-of-week
-    - cron: '*/5 14-16 * * 1-5'  # Every 5 min, 2-4 PM UTC, Mon-Fri
+    # - cron: '*/5 14-16 * * 1-5'  # Every 5 min, 2-4 PM UTC, Mon-Fri
 
   # Allow manual triggering for testing
   workflow_dispatch:
