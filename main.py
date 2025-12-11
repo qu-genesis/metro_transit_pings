@@ -7,13 +7,35 @@ Checks bus times and sends alerts via Telegram.
 import os
 import sys
 import yaml
+import json
 from datetime import datetime, timezone
+from pathlib import Path
 import pytz
 
 from src.metro_api import MetroTransitAPI
 from src.alert_logic import AlertCalculator
 from src.notifier import TelegramNotifier
 from src.state_manager import StateManager
+
+
+def is_paused() -> bool:
+    """
+    Check if alerts are currently paused.
+
+    Returns:
+        True if paused, False otherwise
+    """
+    pause_file = Path(".pause_state.json")
+
+    if not pause_file.exists():
+        return False
+
+    try:
+        with open(pause_file, 'r') as f:
+            state = json.load(f)
+            return state.get('paused', False)
+    except (json.JSONDecodeError, IOError):
+        return False
 
 
 def load_config(config_path: str = "config.yaml") -> dict:
@@ -89,6 +111,12 @@ def main():
     # Check if we should run
     if not is_active_time(config, current_time):
         print("Outside active monitoring window. Exiting.")
+        return
+
+    # Check if alerts are paused
+    if is_paused():
+        print("⏸️  Alerts are currently paused. Send /start to resume.")
+        print("Exiting.")
         return
 
     # Initialize components
@@ -200,6 +228,18 @@ def main():
             continue
 
     print()
+
+    # Deduplicate alerts by departure time and route
+    # (API sometimes returns duplicate entries for same departure)
+    if all_alerts_to_send:
+        seen = {}
+        deduped_alerts = []
+        for alert in all_alerts_to_send:
+            key = (alert.get('route_id'), alert.get('departure_time'))
+            if key not in seen:
+                seen[key] = True
+                deduped_alerts.append(alert)
+        all_alerts_to_send = deduped_alerts
 
     # Send alerts
     if all_alerts_to_send:

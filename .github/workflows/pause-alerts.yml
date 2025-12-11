@@ -1,0 +1,31 @@
+name: Pause/Resume Alerts
+
+on:
+  repository_dispatch:
+    types: [pause-alerts, resume-alerts]
+
+jobs:
+  update-state:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Update pause state
+        run: |
+          if [ "${{ github.event.action }}" = "pause-alerts" ]; then
+            echo "{\"paused\": true, \"paused_at\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}" > .pause_state.json
+            echo "✅ Alerts paused"
+          else
+            echo "{\"paused\": false}" > .pause_state.json
+            echo "✅ Alerts resumed"
+          fi
+
+      - name: Commit state change
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .pause_state.json
+          git commit -m "Update alert pause state" || echo "No changes to commit"
+          git push
