@@ -1,0 +1,43 @@
+# Metro Transit Bus Alert Configuration
+
+user_preferences:
+  walking_time_minutes: 3  # Time from apartment to bus stop
+  advance_notice_minutes: 15  # Alert buffer time (you want 15 min warning)
+
+  # Days to monitor (0=Monday, 6=Sunday)
+  active_days: [0, 1, 2, 3, 4]  # Monday-Friday
+
+  # Time window for monitoring (24-hour format)
+  active_timeframe:
+    start: "08:00"  # 8:00 AM
+    end: "09:10"    # 9:10 AM
+
+  # Timezone for schedule (Metro Transit uses America/Chicago)
+  timezone: "America/Chicago"
+
+# Your bus routes and stop
+routes:
+  - route_id: "17"
+    stop_id: "50195"
+    direction_id: "2"  # 2 = Eastbound (EB) to Central & 26th Ave
+    description: "Route 17 Eastbound"
+
+  - route_id: "925"  # E Line is route 925 in the API
+    stop_id: "50195"
+    direction_id: "4"  # 4 = Northbound (NB) to Westgate Station
+    description: "E Line Northbound"
+
+# Alert settings
+alerts:
+  # Minimum delay (in minutes) to trigger a delay notification
+  delay_threshold_minutes: 5
+
+  # Telegram configuration (values will come from environment variables)
+  telegram:
+    enabled: true
+    # These will be set as GitHub Secrets: TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID
+
+# API Configuration
+api:
+  base_url: "https://svc.metrotransit.org"
+  timeout_seconds: 10
