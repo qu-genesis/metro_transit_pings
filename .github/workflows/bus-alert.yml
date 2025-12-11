@@ -1,4 +1,4 @@
-name: Bus Alert System
+name: Bus Alert Workflow
 
 on:
   schedule:
