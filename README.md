@@ -30,7 +30,7 @@ Never miss your bus again! This system automatically monitors Metro Transit bus 
 ### 1. Clone this repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/qu-genesis/metro_transit_pings.git
 cd metro_transit_pings
 ```
 
