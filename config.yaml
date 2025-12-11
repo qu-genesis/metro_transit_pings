@@ -39,5 +39,5 @@ alerts:
 
 # API Configuration
 api:
-  base_url: "https://svc.metrotransit.org"
+  base_url: "https://svc.metrotransit.org/nextrip"
   timeout_seconds: 10
