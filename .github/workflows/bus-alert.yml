@@ -39,10 +39,10 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python main.py
 
-      - name: Upload state file
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: alert-state-${{ github.run_number }}
-          path: alert_state.json
-          retention-days: 1
+      - name: Commit updated state file
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add alert_state.json
+          git diff --staged --quiet || git commit -m "Update alert state [skip ci]"
+          git push || echo "Nothing to push"

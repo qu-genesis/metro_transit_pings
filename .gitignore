@@ -208,5 +208,5 @@ __marimo__/
 .env
 
 # Metro Transit Pings - State files
-alert_state.json
+# Note: alert_state.json is now tracked in git for persistence
 .pause_state.json
