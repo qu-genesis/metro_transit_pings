@@ -10,7 +10,7 @@ user_preferences:
   # Time window for monitoring (24-hour format)
   active_timeframe:
     start: "08:00"  # 8:00 AM
-    end: "15:00"    # :10 AM
+    end: "23:00"    # :10 AM
 
   # Timezone for schedule (Metro Transit uses America/Chicago)
   timezone: "America/Chicago"
