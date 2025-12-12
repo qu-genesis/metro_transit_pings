@@ -209,4 +209,4 @@ __marimo__/
 
 # Metro Transit Pings - State files
 # Note: alert_state.json is now tracked in git for persistence
-.pause_state.json
+# .pause_state.json
