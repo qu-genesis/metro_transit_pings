@@ -1,29 +1,17 @@
 # Metro Transit Pings 🚌
 
-**Me go bus when?** - Automated bus departure alerts for Metro Transit Minneapolis
+An automated bus alert system that monitors Metro Transit Minneapolis departures and sends timely Telegram notifications so you never miss your bus. Running entirely on GitHub Actions (no server needed), it checks real-time bus data every 5 minutes during your configured schedule and alerts you 15 minutes before you need to leave.
 
-Never miss your bus again! This system automatically monitors Metro Transit bus arrivals and sends you timely Telegram notifications so you know exactly when to leave your apartment.
-
-## Features
-
-- 📱 **Telegram Alerts**: Get instant push notifications on your phone
-- 🕐 **Smart Timing**: Alerts sent 15 minutes before you need to leave
-- 🚌 **Multi-Route Support**: Track multiple bus routes simultaneously
-- ⚠️ **Delay Notifications**: Get updates if your bus is running late
-- 🤖 **Fully Automated**: Runs on GitHub Actions - no server needed!
-- ⏰ **Scheduled Monitoring**: Only runs during your configured time window
+Features smart timing calculations based on your walking distance, multi-route monitoring, duplicate prevention, delay notifications, and pause/resume controls. Perfect for commuters with predictable schedules who want forceful reminders without constantly checking transit apps.
 
 ## How It Works
 
-1. **GitHub Actions** runs every 5 minutes during your active timeframe (8:00-9:10 AM weekdays)
-2. **Fetches real-time data** from Metro Transit API for your configured routes
-3. **Calculates when to alert** based on:
+**GitHub Actions** runs every 5 minutes during your active timeframe (8:00-9:10 AM weekdays), fetches **real-time data** from Metro Transit API for your configured routes. **Calculates when to alert** based on:
    - Bus departure time
    - Your walking time to the stop (3 minutes)
    - Advance notice period (15 minutes)
-4. **Sends Telegram notification** when it's time to head out
-5. **Tracks sent alerts** to prevent duplicates
-6. **Monitors for delays** and sends updates if buses are running late
+
+**Sends Telegram notification** when it's time to head out. **Tracks sent alerts** to prevent duplicates, *mMonitors for delays** and sends updates if buses are running late.
 
 ## Setup Instructions
 
@@ -79,6 +67,8 @@ This will verify that the Metro Transit API is accessible and show upcoming depa
 
 ### Test Telegram Bot
 
+If you want the alert to send through telegram, register a telegram bot token and telegram chat id from @botfather in Telegram.
+
 ```bash
 python -c "from src.notifier import TelegramNotifier; import os; os.environ['TELEGRAM_BOT_TOKEN']='YOUR_TOKEN'; os.environ['TELEGRAM_CHAT_ID']='YOUR_CHAT_ID'; TelegramNotifier().send_test_message()"
 ```
@@ -100,12 +90,12 @@ python main.py
 
 See [config.yaml](config.yaml) for all available options:
 
-- **Walking time**: Time from your apartment to the bus stop
-- **Advance notice**: How early you want to be alerted
-- **Active days**: Which days to monitor (0=Monday, 6=Sunday)
-- **Active timeframe**: Time window for monitoring
-- **Routes**: Your bus routes, stops, and directions
-- **Delay threshold**: Minimum delay (minutes) to trigger delay alerts
+- `walking_time_minutes`: Time from my residence to the bus stop
+- `advance_notice_minutes`: How long it takes me to get ready
+- `active_days`: Which days to monitor (0=Monday, 6=Sunday)
+- `active_timeframe`: Time window for monitoring
+- `routes`: Your bus routes, stops, and directions
+- `alerts`: Minimum delay (minutes) to trigger delay alerts
 
 ## Project Structure
 
@@ -126,37 +116,6 @@ metro_transit_pings/
 └── alert_state.json         # State file (created at runtime)
 ```
 
-## How Alerts Work
-
-### Initial Alert
-
-When a bus is arriving and it's time to leave:
-
-```
-🚌 Time to head out!
-
-17 to Blake Road
-🚏 Departs: 8:45 AM (in 20 min)
-🚶 Leave by: 8:42 AM (in 17 min)
-
-E Line to Southdale
-🚏 Departs: 8:48 AM (in 23 min)
-🚶 Leave by: 8:45 AM (in 20 min)
-```
-
-### Delay Alert
-
-If a bus you've been alerted about gets delayed:
-
-```
-⚠️ Bus Update - 17 Delayed
-
-Original: 8:45 AM
-Now: 8:52 AM (+7 min delay)
-
-🚶 New leave time: 8:49 AM (in 6 min)
-```
-
 ## GitHub Actions Schedule
 
 The workflow runs:
@@ -164,26 +123,7 @@ The workflow runs:
 - This covers 8:00-9:10 AM Central Time (both CDT and CST)
 - **Monday-Friday only**
 
-You can also trigger it manually from the Actions tab for testing.
-
-## Troubleshooting
-
-### Not receiving alerts?
-
-1. Check GitHub Actions → Workflow runs for errors
-2. Verify your secrets are set correctly
-3. Check that you're within the active time window
-4. Run `python test_api.py` to verify API access
-
-### Getting duplicate alerts?
-
-The state management system should prevent this, but if it happens:
-1. Check if `alert_state.json` is being persisted correctly
-2. Verify the artifact upload/download is working in GitHub Actions
-
-### Wrong timezone?
-
-The config uses `America/Chicago` (Central Time). GitHub Actions runs in UTC, but the code handles conversion automatically.
+You can also trigger it manually from the Actions tab for testing. 
 
 ## Credits
 
@@ -191,7 +131,3 @@ Built using:
 - [Metro Transit NexTrip API](https://svc.metrotransit.org/swagger/index.html)
 - [Telegram Bot API](https://core.telegram.org/bots/api)
 - [GitHub Actions](https://github.com/features/actions)
-
-## License
-
-MIT License - Feel free to use and modify for your own bus-catching needs!

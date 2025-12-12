@@ -251,7 +251,14 @@ def main():
         else:
             print("  ✗ Failed to send alert")
     else:
-        print("No alerts to send at this time.")
+        # Calculate when next alert might be sent
+        advance_min = config['user_preferences']['advance_notice_minutes']
+        walking_min = config['user_preferences']['walking_time_minutes']
+        total_buffer = advance_min + walking_min
+
+        print(f"No alerts to send at this time.")
+        print(f"ℹ️  Alerts are sent {advance_min} minutes before you need to leave.")
+        print(f"   (Buses departing within the next ~{total_buffer} minutes would trigger alerts)")
 
     # Send delay updates
     if all_delay_updates:
