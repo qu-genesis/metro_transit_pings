@@ -1,6 +1,7 @@
 name: Pause/Resume Alerts
 
 on:
+  workflow_dispatch:
   repository_dispatch:
     types: [pause-alerts, resume-alerts]
 
