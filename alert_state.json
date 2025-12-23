@@ -1,5 +1,5 @@
 {
-  "last_run": "2025-12-23T14:50:05.592488+00:00",
+  "last_run": "2025-12-23T15:16:01.192426+00:00",
   "tracked_departures": [
     {
       "key": "17_1012698_50195",
@@ -43,6 +43,28 @@
       "current_departure_time": "2025-12-23T15:02:49+00:00",
       "initial_alert_sent": true,
       "initial_alert_time": "2025-12-23T14:50:05.592488+00:00",
+      "delay_update_sent": false
+    },
+    {
+      "key": "17_1055043_50195",
+      "route_id": "17",
+      "trip_id": "1055043",
+      "stop_id": "50195",
+      "original_departure_time": "2025-12-23T15:30:16+00:00",
+      "current_departure_time": "2025-12-23T15:30:16+00:00",
+      "initial_alert_sent": true,
+      "initial_alert_time": "2025-12-23T15:16:01.192426+00:00",
+      "delay_update_sent": false
+    },
+    {
+      "key": "925_966635_50195",
+      "route_id": "925",
+      "trip_id": "966635",
+      "stop_id": "50195",
+      "original_departure_time": "2025-12-23T15:23:33+00:00",
+      "current_departure_time": "2025-12-23T15:23:33+00:00",
+      "initial_alert_sent": true,
+      "initial_alert_time": "2025-12-23T15:16:01.192426+00:00",
       "delay_update_sent": false
     }
   ]
