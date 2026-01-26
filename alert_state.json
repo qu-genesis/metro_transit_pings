@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-01-26T14:14:07.347271+00:00",
+  "last_run": "2026-01-26T14:32:01.446234+00:00",
   "tracked_departures": [
     {
       "key": "17_1010363_50195",
@@ -32,6 +32,17 @@
       "current_departure_time": "2026-01-26T14:25:06+00:00",
       "initial_alert_sent": true,
       "initial_alert_time": "2026-01-26T14:14:07.347271+00:00",
+      "delay_update_sent": false
+    },
+    {
+      "key": "925_1100949_50195",
+      "route_id": "925",
+      "trip_id": "1100949",
+      "stop_id": "50195",
+      "original_departure_time": "2026-01-26T14:39:06+00:00",
+      "current_departure_time": "2026-01-26T14:39:06+00:00",
+      "initial_alert_sent": true,
+      "initial_alert_time": "2026-01-26T14:32:01.446234+00:00",
       "delay_update_sent": false
     }
   ]
